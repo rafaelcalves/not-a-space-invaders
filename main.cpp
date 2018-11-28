@@ -59,7 +59,7 @@ int main() {
     printf("GLFW %s\n", glfwversion);
 
     // Creates window with starting dimensions set in WIDTH and HEIGHT
-    window = glfwCreateWindow(WIDTH, HEIGHT, "Defend the Earth", nullptr, nullptr);
+    window = glfwCreateWindow(WIDTH, HEIGHT, "Gonzaga Invaders", nullptr, nullptr);
     
     // Get frameSpaceship buffer size to render viewport in proper scale - useful for HiDPI screens
     int fbWidth;
@@ -509,13 +509,11 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
             if(spaceshipXOffSet >= 0) {
                 spaceshipXOffSet = spaceshipXOffSet - 10;
             }
-            printf("%d\n", spaceshipXOffSet);
             break;
         case GLFW_KEY_RIGHT:
             if(spaceshipXOffSet <= WIDTH - 100) {
                 spaceshipXOffSet = spaceshipXOffSet + 10;
             }
-            printf("%d\n", spaceshipXOffSet);
             break;
         case GLFW_KEY_SPACE:
             if(action == GLFW_RELEASE) projectileShot = true;
