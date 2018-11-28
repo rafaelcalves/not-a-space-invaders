@@ -1,4 +1,3 @@
-// STBI for image loading
 #define STB_IMAGE_IMPLEMENTATION
 #include "utils/stb_image.h"
 #include "utils/Layer.hpp"
@@ -30,7 +29,8 @@ void enableTestingAlpha();
 void setImagesConfiguration();
 void loadExplosionTexture(int &texWidth, int &texHeight, int &nrChannels, unsigned char *data, Layer *const *layers);
 
-int WIDTH = 700, HEIGHT = 1100;
+int WIDTH = 700, HEIGHT = 900;
+int spaceshipXOffSet = 0;
 
 bool projectileShot = false;
 
@@ -111,10 +111,10 @@ int main() {
     
     // Spaceship vertices
     GLfloat verticesSpaceship[] = {
-        +0000.0f, +0975.0f, -0.1f, // top-left
-        +0000.0f, +1075.0f, -0.1f, // bottom-left
-        +0100.0f, +1075.0f, -0.1f, // bottom-right
-        +0100.0f, +0975.0f, -0.1f  // top-right
+        +0000.0f, +0775.0f, -0.1f, // top-left
+        +0000.0f, +0875.0f, -0.1f, // bottom-left
+        +0100.0f, +0875.0f, -0.1f, // bottom-right
+        +0100.0f, +0775.0f, -0.1f  // top-right
     };
 
     // Setup for X = 0.125f initially because it's a sprite
@@ -130,10 +130,10 @@ int main() {
 
     // Rock vertices
     GLfloat verticesRock[] = {
-            +0000.0f, -0050.0f, -0.1f, // top-left
+            +0000.0f, -0100.0f, -0.1f, // top-left
             +0000.0f, +0000.0f, -0.1f, // bottom-left
             +0100.0f, +0000.0f, -0.1f, // bottom-right
-            +0100.0f, -0050.0f, -0.1f  // top-right
+            +0100.0f, -0100.0f, -0.1f  // top-right
     };
 
     GLfloat textureCoordsRock[] = {
@@ -144,14 +144,14 @@ int main() {
     };
 
     // Instantiating rock
-    auto rock = new GameObject(verticesRock, textureCoordsRock, "../Resources/rock.png");
+    auto rock = new GameObject(verticesRock, textureCoordsRock, "../Resources/gonzaga.png");
 
     // Projectile vertices
     GLfloat verticesProjectile[] = {
-            +0046.0f, +0972.0f, -0.1f, // top-left
-            +0046.0f, +0984.0f, -0.1f, // bottom-left
-            +0054.0f, +0984.0f, -0.1f, // bottom-right
-            +0054.0f, +0972.0f, -0.1f  // top-right
+            +0046.0f, +0772.0f, -0.1f, // top-left
+            +0046.0f, +0784.0f, -0.1f, // bottom-left
+            +0054.0f, +0784.0f, -0.1f, // bottom-right
+            +0054.0f, +0772.0f, -0.1f  // top-right
     };
 
     GLfloat textureCoordsProjectile[] = {
@@ -216,7 +216,7 @@ int main() {
 
     // Setting speed of movement for objects
     float speedSpaceship = 175.0f;
-    float speedProjectile = -350.0f;
+    float speedProjectile = -600.0f;
     float speedRock = 125.0f;
 
     // Initializes variables to load last position for translation of objects
@@ -229,11 +229,6 @@ int main() {
     bool spaceshipHit = false;
     bool projectileHit = false;
     int rocksDestroyed = 0;
-
-    std::cout << "Welcome to my game! The rules are:\n"
-                 "- You must not let rocks get past, if one does, you lose;\n"
-                 "- If a rock hits the spaceship, you lose;\n"
-                 "- If you destroy 10 rocks, you win;\n" << std::endl;
 
     // Allow some time for the player to read instructions
     usleep(3000000);
@@ -292,7 +287,7 @@ int main() {
             }
         }
 
-        lastPositionSpaceship = spaceship->translation[12];
+        lastPositionSpaceship = spaceshipXOffSet;
 
         // Setting the rock's initial position randomly if drawing a new one
         if (!rockOnScreen) {
@@ -511,8 +506,16 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
     switch (key){
         case GLFW_KEY_LEFT:
+            if(spaceshipXOffSet >= 0) {
+                spaceshipXOffSet = spaceshipXOffSet - 10;
+            }
+            printf("%d\n", spaceshipXOffSet);
             break;
         case GLFW_KEY_RIGHT:
+            if(spaceshipXOffSet <= WIDTH - 100) {
+                spaceshipXOffSet = spaceshipXOffSet + 10;
+            }
+            printf("%d\n", spaceshipXOffSet);
             break;
         case GLFW_KEY_SPACE:
             if(action == GLFW_RELEASE) projectileShot = true;

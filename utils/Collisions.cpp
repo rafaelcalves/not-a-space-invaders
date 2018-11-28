@@ -1,7 +1,3 @@
-//
-// Created by João Pedro Berton Palharini on 4/28/18.
-//
-
 #include "Collisions.h"
 
 bool rockOnSpaceship(GameObject* rock, GameObject* spaceship) {

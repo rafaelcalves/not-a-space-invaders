@@ -1,7 +1,3 @@
-//
-// Created by João Pedro Berton Palharini on 4/28/18.
-//
-
 #ifndef OPENGL_BABYSTEPS_COLLISIONS_H
 #define OPENGL_BABYSTEPS_COLLISIONS_H
 
